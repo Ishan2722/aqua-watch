@@ -1,5 +1,7 @@
 # Connect shared reports
 
+The live Aqua Watch site is already connected to its Supabase project. Follow this guide if you are setting up another project or replacing the current connection.
+
 The site uses Supabase for shared reports. Visitors do not need to create an account. Report type, concern, date, exact map coordinates, and description are public. The database keeps a private owner ID only so a visitor can delete reports submitted from their browser session.
 
 ## Set up the database

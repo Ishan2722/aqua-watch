@@ -2,7 +2,7 @@
 
 ## 1. Upload the folder to a new public GitHub repository
 
-Before uploading, complete [SUPABASE_SETUP.md](SUPABASE_SETUP.md) and add your project's URL and publishable key to `supabase-config.js`. The publishable key is intended for the site; never upload a `service_role` or secret key.
+The live project is already configured in `supabase-config.js`. If you switch to a different Supabase project, complete [SUPABASE_SETUP.md](SUPABASE_SETUP.md) first. The publishable key is intended for the site; never upload a `service_role` or secret key.
 
 1. Sign in to [GitHub](https://github.com/) and choose **New repository**.
 2. Name it `aqua-watch`, choose **Public**, and create it. You can leave the “Add a README” option off because this folder already has one.

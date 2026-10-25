@@ -18,7 +18,7 @@ Aqua Watch is a small, student-made project for the Congressional App Challenge.
 
 Open `index.html` in a browser. There are no installs or build steps. An internet connection is needed for Leaflet, Supabase, and satellite map tiles.
 
-To enable shared reports, follow [SUPABASE_SETUP.md](SUPABASE_SETUP.md) and fill in `supabase-config.js`. Until the database is connected, the map examples and local test reports work, but public report submissions are disabled.
+The published site is connected to the Supabase project configured in `supabase-config.js`. To use a different database project, follow [SUPABASE_SETUP.md](SUPABASE_SETUP.md) and replace the project URL and publishable key.
 
 ## Data storage and privacy
 
