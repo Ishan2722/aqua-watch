@@ -691,27 +691,93 @@ function initMainMap() {
   }
 }
 
-const QUIZ_QUESTIONS = [
-  { question: "Which places can coastal wetlands and estuaries support?", options: ["Fish and wildlife habitat", "Only desert plants", "No living things", "Only city roads"], answer: 0, why: "Coastal wetlands and estuaries provide habitat for fish and wildlife." },
-  { question: "What can wetlands help soften for coastal communities?", options: ["The effects of storms", "The color of ocean water", "The tides everywhere", "The wind each day"], answer: 0, why: "Wetlands can reduce some storm impacts and help protect coastal places." },
-  { question: "How can litter from inland areas reach the sea?", options: ["It can travel through streets, streams, and rivers", "It disappears when it rains", "It only moves by airplane", "It cannot reach water"], answer: 0, why: "Trash can move from land into waterways and onward to the coast." },
-  { question: "What can rain carry from land into nearby water?", options: ["Extra nutrients", "More beaches", "Clean sand only", "Sea turtles"], answer: 0, why: "Runoff can carry nutrients from land into streams, bays, and coastal water." },
-  { question: "What can too many nutrients help cause?", options: ["Algae blooms", "Cleaner water every time", "More shoreline", "Less rainfall"], answer: 0, why: "Excess nutrients can fuel algae blooms and harm water quality." },
-  { question: "Which is one possible effect of a harmful algae bloom?", options: ["It can harm aquatic life", "It always helps every fish", "It removes all pollution", "It makes runoff stop"], answer: 0, why: "Algae blooms can harm aquatic life and some can produce toxins." },
-  { question: "How can a cleanup help if you live far from the coast?", options: ["Picking up litter can keep it from reaching waterways", "It changes the ocean tide", "It stops all storms", "It makes plastic dissolve"], answer: 0, why: "Cleaning up litter near home or streams can help keep debris out of the ocean." },
-  { question: "Which everyday choice can help reduce marine debris?", options: ["Put trash in the proper bin", "Leave litter beside a stream", "Use more single-use items", "Drop waste on the beach"], answer: 0, why: "Putting trash in the right place helps prevent it from becoming marine debris." }
+const QUIZ_BANK = [
+  { topic: "connected", question: "What does a watershed describe?", answer: "Land that drains rain and snowmelt toward waterways", distractors: ["Only the land beside an ocean beach", "A channel used only by ocean tides", "An underwater forest made of kelp"], why: "A watershed channels rain and snowmelt to creeks, rivers, bays, or the ocean." },
+  { topic: "connected", question: "How might litter from a neighborhood reach the coast?", answer: "It can move through storm drains, streams, and rivers", distractors: ["It changes into seawater", "It travels only when carried by ocean fish", "It cannot move once it leaves a person's hand"], why: "Storm drains and waterways can connect inland places to coastal water." },
+  { topic: "connected", question: "What is an estuary?", answer: "A place where river water and seawater mix", distractors: ["A beach with no plants or animals", "A deep part of the open ocean far from land", "A lake that never receives freshwater"], why: "Estuaries form where rivers meet the sea and fresh and salt water mix." },
+  { topic: "connected", question: "Why can activities far from a beach matter to coastal water?", answer: "Water can carry materials downstream through connected watersheds", distractors: ["Every inland activity changes the ocean tide", "Coastal water is sealed off from rivers", "Wind carries all inland pollution directly offshore"], why: "Waterways can carry runoff and debris from inland areas toward the coast." },
+  { topic: "connected", question: "Which set includes places that are part of coastal systems?", answer: "Estuaries, tidal wetlands, rocky shores, and nearshore waters", distractors: ["Only sandy beaches", "Only deep ocean trenches", "Mountaintops with no water connection"], why: "Coastal systems include many habitats beyond the beach itself." },
+  { topic: "connected", question: "What helps create changing conditions in an estuary?", answer: "River flow, tides, and mixing fresh and salt water", distractors: ["A permanent lack of tides", "Only daily changes in air temperature", "A wall that keeps rivers and oceans separate"], why: "Estuaries change as river water and tides mix and move through them." },
+  { topic: "connected", question: "Which path best shows how water can move from land to the sea?", answer: "Rain → creek → river → coastal bay", distractors: ["Rain → mountain peak → desert → moon", "Ocean → road → rooftop → cloud only", "Beach sand → storm drain → sidewalk with no water"], why: "Rain and snowmelt can drain through streams and rivers into bays or the ocean." },
+  { topic: "connected", question: "A storm drain near a school matters to a coast because it may connect to…", answer: "A nearby stream or other waterway", distractors: ["A sealed container under the school", "A water filter that removes every pollutant", "A path that always ends in a drinking fountain"], why: "Storm drains can carry water into streams and other waterways." },
+
+  { topic: "habitats", question: "Why are estuaries sometimes called nurseries?", answer: "Many animals find food, shelter, or places to grow there", distractors: ["They are where all ocean animals are born", "They contain no predators or changing conditions", "They are used only to grow coastal plants for people"], why: "Many fish and other animals use estuary habitats during early life stages." },
+  { topic: "habitats", question: "Which is a coastal habitat named in Learn?", answer: "A kelp forest", distractors: ["A paved parking lot", "A dry desert dune far inland", "An underground cave with no water connection"], why: "Kelp forests are one of the coastal ecosystems described in Learn." },
+  { topic: "habitats", question: "What can wetland plants and seagrasses do as water moves through them?", answer: "Trap some sediment and absorb some nutrients", distractors: ["Remove every kind of pollution from all water", "Stop tides from reaching the shore", "Turn salt water into rain immediately"], why: "Wetland plants and seagrasses can trap some sediment and absorb nutrients." },
+  { topic: "habitats", question: "How can wetlands help during some floods?", answer: "They can hold and slow some floodwater", distractors: ["They prevent every storm from reaching land", "They move all floodwater offshore", "They keep rivers from ever rising"], why: "Wetlands can store and slow some floodwater, depending on local conditions." },
+  { topic: "habitats", question: "Which animal group may use beaches and mudflats to feed?", answer: "Shorebirds", distractors: ["Only animals that live in deserts", "No wildlife; beaches are lifeless", "Only deep-sea fish"], why: "Shorebirds feed along beaches and mudflats." },
+  { topic: "habitats", question: "Which is one way coastal places support people?", answer: "They support fishing, recreation, shipping, and tourism", distractors: ["They eliminate the need for local jobs", "They are useful only as places to build roads", "They prevent all coastal hazards"], why: "Coastal waters support work, recreation, and community life." },
+  { topic: "habitats", question: "Which statement about wetlands and storms is most accurate?", answer: "Wetlands can reduce some flooding and erosion, but not prevent every storm impact", distractors: ["Wetlands make every storm harmless", "Wetlands have no connection to flooding", "Wetlands stop all waves everywhere"], why: "Wetlands provide some natural protection, but their benefits depend on local conditions." },
+  { topic: "habitats", question: "What can a kelp forest provide?", answer: "Underwater habitat for marine life", distractors: ["A barrier that blocks all ocean currents", "A source of freshwater for rivers", "A place where no animals can live"], why: "Kelp forests provide underwater habitat." },
+
+  { topic: "pollution", question: "What is marine debris?", answer: "Human-made material that ends up in oceans, waterways, or shorelines", distractors: ["Any naturally occurring seaweed", "Only oil released from ships", "Sand moved by ordinary waves"], why: "Marine debris is human-made material in marine and other aquatic environments." },
+  { topic: "pollution", question: "What can happen to plastic exposed to sunlight, saltwater, and waves?", answer: "It can fragment into smaller pieces called microplastics", distractors: ["It always dissolve completely within a day", "It becomes harmless sand", "It turns into nutrients that clean the water"], why: "Plastic can break into smaller pieces that are difficult to remove." },
+  { topic: "pollution", question: "What may runoff carry from roads, yards, and fields?", answer: "Soil, pet waste, fertilizer, pesticides, or oil", distractors: ["Only clean drinking water", "Only seawater and shells", "Nothing, because rain filters itself"], why: "Runoff can pick up a mix of materials as it flows over land." },
+  { topic: "pollution", question: "Why can paved areas increase runoff?", answer: "Water cannot soak through pavement as easily", distractors: ["Pavement creates extra rain", "Pavement absorbs all pollutants", "Pavement makes storm drains flow uphill"], why: "Hard surfaces keep water from soaking into the ground, so more can flow away." },
+  { topic: "pollution", question: "Which two nutrients can cause problems when too much enters water?", answer: "Nitrogen and phosphorus", distractors: ["Oxygen and sunlight", "Sand and salt", "Carbon dioxide and water vapor only"], why: "Too much nitrogen and phosphorus can fuel excessive algae growth." },
+  { topic: "pollution", question: "Are nitrogen and phosphorus always pollutants?", answer: "No. They are natural nutrients, but excess amounts can cause harm", distractors: ["Yes. Any amount is poisonous", "No. They cannot affect aquatic ecosystems", "Yes. They occur only in plastic"], why: "These nutrients are natural, but too much can disrupt water ecosystems." },
+  { topic: "pollution", question: "What can an excess of nutrients help cause?", answer: "Algae to grow faster than the ecosystem can handle", distractors: ["All plastic to disappear", "Every estuary to dry up", "Tides to stop moving"], why: "Excess nutrients can contribute to rapid algae growth and blooms." },
+  { topic: "pollution", question: "Which statement about algae blooms is correct?", answer: "Some are harmful, but not every bloom is harmful", distractors: ["Every bloom produces a toxin", "No bloom can affect aquatic life", "A bloom's color proves exactly what caused it"], why: "Some blooms can be harmful, but appearance alone cannot confirm toxicity." },
+
+  { topic: "observe", question: "What should you do if you notice an unusual sheen or dead wildlife?", answer: "Keep a safe distance and make a careful observation", distractors: ["Touch it to identify the material", "Move the animal yourself", "Taste nearby water to check it"], why: "Avoid touching unknown substances or wildlife; observe from a safe distance." },
+  { topic: "observe", question: "Can a photo or community report prove that water is unsafe?", answer: "No. It is an observation, not a lab result or official advisory", distractors: ["Yes. Any report is an official beach closure", "Yes, if the water looks unusual", "No, because photos can never help describe a concern"], why: "A report can flag what someone saw, but it cannot verify water quality." },
+  { topic: "observe", question: "Where should someone check for current swimming advisories?", answer: "Local or state beach and health department guidance", distractors: ["Only the Aqua Watch report map", "A random social media comment", "The color of the water from a photo"], why: "Local and state agencies provide current beach advisories and health guidance." },
+  { topic: "observe", question: "What should you do around a suspected algae bloom?", answer: "Keep people and pets away and follow posted local guidance", distractors: ["Swim through it to see if it is toxic", "Let pets drink the water", "Collect algae with bare hands"], why: "Do not contact a suspected bloom; check trusted local safety guidance." },
+  { topic: "observe", question: "Which report description is most useful?", answer: "Describe visible details without guessing the cause", distractors: ["Name a chemical without evidence", "Write only 'the ocean is bad'", "Include a personal phone number for context"], why: "Clear observations are more useful than guesses or personal information." },
+  { topic: "observe", question: "Why should a report avoid personal details?", answer: "Exact locations and descriptions are public on this site", distractors: ["The map deletes every report immediately", "Only agencies can read reports", "Names are required for the map to work"], why: "Reports are public, so keep personal information out of descriptions." },
+  { topic: "observe", question: "A patch of discolored water appears on a beach. What can you conclude from its color alone?", answer: "Not enough to identify the cause or whether it is harmful", distractors: ["It is definitely a toxic bloom", "It is definitely harmless", "It must be oil"], why: "Color alone cannot identify a bloom or determine whether it is harmful." },
+  { topic: "observe", question: "Why do posted beach signs matter?", answer: "They can share current local safety information", distractors: ["They are only decorations", "They replace all water testing forever", "They guarantee that hazards cannot happen"], why: "Follow posted signs and current advisories when making beach safety decisions." },
+
+  { topic: "actions", question: "Why can picking up litter near a stream help the coast?", answer: "It may keep litter from traveling downstream", distractors: ["It changes the river's direction", "It turns plastic into clean water", "It prevents all future flooding"], why: "Litter collected near waterways may never reach coastal water." },
+  { topic: "actions", question: "What is a responsible way to use yard fertilizer?", answer: "Follow its directions and avoid applying it before rain", distractors: ["Apply extra before a storm", "Sweep unused fertilizer into a storm drain", "Use it on every surface"], why: "Careful use can reduce nutrients washing into nearby waterways." },
+  { topic: "actions", question: "Where should motor oil or paint go?", answer: "Use local hazardous-waste or disposal instructions", distractors: ["A storm drain", "A creek or beach", "A roadside gutter"], why: "Do not pour oil or chemicals into drains; follow local disposal guidance." },
+  { topic: "actions", question: "Why check local recycling rules?", answer: "Accepted items and instructions differ by place", distractors: ["All plastics are recycled everywhere", "Recycling rules never change", "Only beaches have recycling bins"], why: "Local guidance explains which items belong in local recycling programs." },
+  { topic: "actions", question: "What is a useful way to reduce litter before it reaches waterways?", answer: "Secure trash so it cannot blow or wash away", distractors: ["Leave loose waste outside overnight", "Put wrappers beside a storm drain", "Wait for a beach cleanup to collect it"], why: "Keeping waste contained helps prevent it from entering runoff and waterways." },
+  { topic: "actions", question: "What is a safe way to join a shoreline cleanup?", answer: "Take part in a supervised cleanup and follow its safety instructions", distractors: ["Handle unknown containers and liquids", "Approach sick or dead wildlife", "Enter closed areas without permission"], why: "Cleanups can help remove litter; follow organizers' safety directions." },
+  { topic: "actions", question: "Which action can help keep pet waste out of waterways?", answer: "Pick it up, bag it, and place it in the trash", distractors: ["Leave it beside a storm drain", "Wash it into the street", "Put it on the beach"], why: "Picking up pet waste helps keep it from washing into streams and beaches." },
+  { topic: "actions", question: "What can people do together to support healthier coasts?", answer: "Learn local stormwater practices and share reliable advisories", distractors: ["Replace official water testing with guesses", "Assume one cleanup solves every pollution source", "Ignore signs if the beach looks clear"], why: "Community learning and trusted information can complement everyday prevention." }
 ];
 
+const QUIZ_TOPICS = ["connected", "habitats", "pollution", "observe", "actions"];
+let quizQuestions = [];
 let quizIndex = 0;
 let quizScore = 0;
 let quizAnswered = false;
+
+// Returns a shuffled copy of an array.
+function shuffleItems(items) {
+  const shuffled = [...items];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+  return shuffled;
+}
+
+// Builds an eight-question round with balanced correct answer positions.
+function buildQuizRound() {
+  const topicsWithExtraQuestion = new Set(shuffleItems(QUIZ_TOPICS).slice(0, 3));
+  const selected = QUIZ_TOPICS.flatMap((topic) => {
+    const count = topicsWithExtraQuestion.has(topic) ? 2 : 1;
+    return shuffleItems(QUIZ_BANK.filter((item) => item.topic === topic)).slice(0, count);
+  });
+  const answerPositions = shuffleItems([0, 0, 1, 1, 2, 2, 3, 3]);
+  return shuffleItems(selected).map((item, index) => {
+    const distractors = shuffleItems(item.distractors);
+    const options = [...distractors];
+    options.splice(answerPositions[index], 0, item.answer);
+    return { ...item, options, answerIndex: answerPositions[index] };
+  });
+}
+
+// Shows the quiz introduction and question bank size.
 function showQuizStart() {
   const box = document.getElementById("quiz-box");
-  box.innerHTML = "";
+  box.replaceChildren();
   const wrap = document.createElement("div");
   wrap.className = "quiz-start";
   const copy = document.createElement("p");
-  copy.textContent = "Eight multiple-choice questions. You will see a short explanation after each answer.";
+  copy.textContent = `The bank has ${QUIZ_BANK.length} questions across all five Learn topics. Each round gives you eight questions with a short explanation after each answer.`;
   const start = document.createElement("button");
   start.type = "button";
   start.className = "button-primary";
@@ -720,19 +786,24 @@ function showQuizStart() {
   wrap.append(copy, start);
   box.append(wrap);
 }
+
+// Starts a fresh question round.
 function startQuiz() {
+  quizQuestions = buildQuizRound();
   quizIndex = 0;
   quizScore = 0;
   quizAnswered = false;
   renderQuizQuestion();
 }
+
+// Renders the current question and its answer buttons.
 function renderQuizQuestion() {
   const box = document.getElementById("quiz-box");
-  const item = QUIZ_QUESTIONS[quizIndex];
+  const item = quizQuestions[quizIndex];
   box.replaceChildren();
   const progress = document.createElement("p");
   progress.className = "quiz-progress";
-  progress.textContent = `Question ${quizIndex + 1} of ${QUIZ_QUESTIONS.length}`;
+  progress.textContent = `Question ${quizIndex + 1} of ${quizQuestions.length}`;
   const question = document.createElement("h2");
   question.className = "quiz-question";
   question.textContent = item.question;
@@ -752,30 +823,34 @@ function renderQuizQuestion() {
   const next = document.createElement("button");
   next.type = "button";
   next.className = "button-primary quiz-next";
-  next.textContent = quizIndex === QUIZ_QUESTIONS.length - 1 ? "See my score" : "Next question";
+  next.textContent = quizIndex === quizQuestions.length - 1 ? "See my score" : "Next question";
   next.hidden = true;
   next.addEventListener("click", advanceQuiz);
   box.append(progress, question, choices, feedback, next);
 }
+
+// Scores a selected answer and reveals its explanation.
 function answerQuestion(optionIndex, feedback, choices) {
   if (quizAnswered) return;
   quizAnswered = true;
-  const item = QUIZ_QUESTIONS[quizIndex];
+  const item = quizQuestions[quizIndex];
   const buttons = [...choices.querySelectorAll("button")];
   buttons.forEach((button, index) => {
     button.disabled = true;
-    if (index === item.answer) button.classList.add("correct");
+    if (index === item.answerIndex) button.classList.add("correct");
     else if (index === optionIndex) button.classList.add("incorrect");
   });
-  const isCorrect = optionIndex === item.answer;
+  const isCorrect = optionIndex === item.answerIndex;
   if (isCorrect) quizScore += 1;
   feedback.classList.add(isCorrect ? "correct" : "incorrect");
   feedback.textContent = `${isCorrect ? "That's right." : "Not quite."} ${item.why}`;
   document.querySelector(".quiz-next").hidden = false;
 }
+
+// Advances the round or displays the final score.
 function advanceQuiz() {
   if (!quizAnswered) return;
-  if (quizIndex === QUIZ_QUESTIONS.length - 1) {
+  if (quizIndex === quizQuestions.length - 1) {
     showQuizResult();
     return;
   }
@@ -783,6 +858,8 @@ function advanceQuiz() {
   quizAnswered = false;
   renderQuizQuestion();
 }
+
+// Displays the score and allows a new question round.
 function showQuizResult() {
   const box = document.getElementById("quiz-box");
   box.replaceChildren();
@@ -791,17 +868,19 @@ function showQuizResult() {
   const label = document.createElement("p");
   label.textContent = "Your score";
   const score = document.createElement("strong");
-  score.textContent = `${quizScore} / ${QUIZ_QUESTIONS.length}`;
+  score.textContent = `${quizScore} / ${quizQuestions.length}`;
   const copy = document.createElement("p");
-  copy.textContent = quizScore === QUIZ_QUESTIONS.length ? "Perfect score. Thanks for learning about our coasts." : "Nice work. Revisit Learn and give it another try.";
+  copy.textContent = quizScore === quizQuestions.length ? "Perfect score. Thanks for learning about our coasts." : "Nice work. Revisit Learn and try a fresh set of questions.";
   const retry = document.createElement("button");
   retry.type = "button";
   retry.className = "button-primary";
-  retry.textContent = "Retry quiz";
+  retry.textContent = "Retry with new questions";
   retry.addEventListener("click", startQuiz);
   result.append(label, score, copy, retry);
   box.append(result);
 }
+
+// Shows the quiz introduction when the app loads.
 function initQuiz() {
   showQuizStart();
 }

@@ -36,6 +36,6 @@ The live project is already configured in `supabase-config.js`. If you switch to
 - **Problem (15–25 sec):** Explain why U.S. coasts matter and why noticing pollution is a useful first step.
 - **Reporting walkthrough (25–35 sec):** Pick a coastal point, choose a pollution type and concern level, add a short description, and share it. Explain that exact locations and descriptions are public.
 - **Map walkthrough (20–30 sec):** Zoom with the wheel or map buttons, point out city labels, beach waves and report-based color badges, then click an aqua-outlined warning example to show its public source. Add the TEST reports to demonstrate filters and delete them from the Report page afterward; TEST reports stay on the device.
-- **Learn and quiz (25–40 sec):** Briefly show the three learning sections and answer a quiz question to reveal its explanation.
+- **Learn and quiz (25–40 sec):** Show the five Learn topics and sources, then answer a quiz question to reveal its explanation. Mention that each round draws eight questions from the 40-question bank and varies the answer positions.
 - **Technical challenge (15–25 sec):** Describe how you connected a shared database while using access rules to keep report deletion limited to the person who submitted it, and how the map checks that report locations are along the U.S. West Coast.
 - **What I learned (10–20 sec):** Share what you learned about coasts, making a simple website, or testing an idea.

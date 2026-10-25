@@ -11,7 +11,8 @@ Aqua Watch is a small, student-made project for the Congressional App Challenge.
 - Add clearly marked TEST reports to try map filters and beach colors. Test reports stay on this device.
 - Filter shared and test reports by type or concern.
 - Delete reports submitted in the current browser session.
-- Read three short learning sections and take an eight-question quiz.
+- Read five in-depth learning sections with NOAA and EPA sources.
+- Take an eight-question quiz round drawn from a 40-question bank, with shuffled and evenly balanced answer positions.
 - Use the site on a desktop or phone.
 
 ## Run it
