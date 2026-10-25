@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-labelledby="title desc">
+  <title id="title">Aqua Watch icon</title>
+  <desc id="desc">Detailed black marine binoculars with a neon teal palm island scene in the left lens and a blue water droplet over waves in the right, with a small gull above.</desc>
+  <defs>
+    <linearGradient id="drop" x1="240" y1="126" x2="293" y2="193" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#67C8FF"/>
+      <stop offset="1" stop-color="#177DEB"/>
+    </linearGradient>
+    <clipPath id="leftLens"><circle cx="95" cy="163" r="58"/></clipPath>
+    <clipPath id="rightLens"><circle cx="265" cy="163" r="58"/></clipPath>
+  </defs>
+  <rect width="400" height="300" fill="#00E8C8"/>
+  <g transform="translate(20 10)">
+    <path d="M180 30C162 12 140 12 118 19C140 18 158 26 176 40Q180 44 184 40C202 26 220 18 242 19C220 12 198 12 180 30Z" fill="#071311"/>
+    <path d="M34 106C48 72 77 56 109 66C135 74 151 97 166 102C170 88 176 81 180 81C184 81 190 88 194 102C209 97 225 74 251 66C283 56 312 72 326 106L309 122C294 112 282 116 271 132H89C78 116 66 112 51 122Z" fill="#071311"/>
+    <path d="M50 65C58 54 68 50 81 52L128 61C145 65 155 79 156 96L140 208C138 225 126 236 109 239L80 234C64 231 56 218 54 202L41 88C40 78 43 70 50 65Z" fill="#071311"/>
+    <path d="M310 65C302 54 292 50 279 52L232 61C215 65 205 79 204 96L220 208C222 225 234 236 251 239L280 234C296 231 304 218 306 202L319 88C320 78 317 70 310 65Z" fill="#071311"/>
+    <path d="M145 72C155 55 167 48 180 48C193 48 205 55 215 72L208 143C201 154 193 159 180 159C167 159 159 154 152 143Z" fill="#071311"/>
+    <circle cx="95" cy="163" r="78" fill="#071311" stroke="#25322F" stroke-width="3"/>
+    <circle cx="265" cy="163" r="78" fill="#071311" stroke="#25322F" stroke-width="3"/>
+    <circle cx="95" cy="163" r="66" fill="#F7FFFF" stroke="#00E8C8" stroke-width="3"/>
+    <circle cx="265" cy="163" r="66" fill="#F7FFFF" stroke="#00E8C8" stroke-width="3"/>
+    <g clip-path="url(#leftLens)">
+      <circle cx="95" cy="163" r="58" fill="#F7FFFF"/>
+      <circle cx="119" cy="130" r="12" fill="#D7FFF7"/>
+      <path d="M37 177Q57 151 76 170Q98 142 119 167Q138 152 154 176V192H37Z" fill="#B8F6E9"/>
+      <path d="M87 194C94 178 96 161 93 145L101 143C104 162 102 181 97 194Z" fill="#00CDB0"/>
+      <path d="M95 147C81 134 67 131 57 137C72 138 84 144 94 152Z M95 146C90 133 81 125 70 123C80 133 88 142 96 153Z M97 147C102 134 113 127 127 128C116 135 108 144 99 154Z M96 148C110 141 123 143 133 150C118 148 108 152 99 157Z M93 149C81 144 69 147 59 156C73 153 84 153 94 158Z" fill="#00E8C8"/>
+      <circle cx="95" cy="148" r="3" fill="#078A78"/>
+      <circle cx="101" cy="149" r="3" fill="#078A78"/>
+      <path d="M43 199Q63 194 82 199T121 199T151 199M49 207Q67 202 84 207T119 207T145 207" fill="none" stroke="#00CDB0" stroke-width="3" stroke-linecap="round"/>
+      <path d="M126 145q5-5 10 0M136 151q4-4 8 0" fill="none" stroke="#071311" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <g clip-path="url(#rightLens)">
+      <circle cx="265" cy="163" r="58" fill="#F7FFFF"/>
+      <path d="M207 181Q227 173 246 181T285 181T323 181V220H207Z" fill="#D7F4FF"/>
+      <path d="M208 189Q224 184 240 189T272 189T304 189T323 189M213 202Q230 197 247 202T281 202T314 202" fill="none" stroke="#35A8F5" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="231" cy="145" r="3.5" fill="#5CB9F7"/>
+      <circle cx="300" cy="140" r="2.5" fill="#5CB9F7"/>
+      <path d="M265 119C254 142 243 152 243 168C243 181 252 191 265 191C278 191 287 181 287 168C287 152 276 142 265 119Z" fill="url(#drop)"/>
+      <path d="M258 157C255 162 254 165 254 170" fill="none" stroke="#E5F7FF" stroke-width="4" stroke-linecap="round"/>
+    </g>
+    <circle cx="95" cy="91" r="4" fill="#4A5753"/>
+    <circle cx="95" cy="235" r="4" fill="#4A5753"/>
+    <circle cx="265" cy="91" r="4" fill="#4A5753"/>
+    <circle cx="265" cy="235" r="4" fill="#4A5753"/>
+    <path d="M53 87L62 110M59 80L69 105M307 87L298 110M301 80L291 105" stroke="#34413D" stroke-width="2.5" stroke-linecap="round" opacity=".85"/>
+    <circle cx="180" cy="108" r="24" fill="#101A18" stroke="#5B6964" stroke-width="3"/>
+    <circle cx="180" cy="108" r="16" fill="#00E8C8" stroke="#071311" stroke-width="3"/>
+    <circle cx="180" cy="108" r="6" fill="#071311"/>
+    <path d="M180 84V91M180 125V132M156 108H163M197 108H204" stroke="#87938F" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="150" cy="114" r="5" fill="#5B6964" stroke="#071311" stroke-width="2"/>
+    <circle cx="210" cy="114" r="5" fill="#5B6964" stroke="#071311" stroke-width="2"/>
+  </g>
+</svg>
