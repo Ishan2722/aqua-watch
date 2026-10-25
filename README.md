@@ -4,31 +4,35 @@ Aqua Watch is a small, student-made project for the Congressional App Challenge.
 
 ## Features
 
-- Record a Pacific coast observation with a type, concern level, date, description, and map location.
-- View a satellite map from Tijuana to Vancouver, with historical public examples and reports saved on this device as separate markers.
-- See labeled city dots and warning-sign report pins colored by concern level; public examples have an aqua outline. Zoom with the wheel, buttons, or touch.
-- See beach wave icons and labels on the ocean side, city labels on the land side, and short descriptions when a beach is clicked. Beach colors reflect nearby local reports (not official water-quality alerts).
-- Explore five historical, source-linked public report examples. They are separate from reports saved on this device and do not affect beach colors.
-- Add three clearly labeled test reports to try map filters and beach colors, then delete them from the Report page.
-- Filter reports on the map by type or concern.
-- Delete your own saved reports.
-- Read three short learning sections and visit the sources.
-- Take an eight-question quiz with instant explanations and a retry option.
-- Use a responsive dark layout on desktop or phone.
-- Show the Aqua Watch logo in the navigation and as the browser tab icon.
+- Share a Pacific coast observation with a type, concern level, date, exact map location, and short description.
+- View shared community reports on a satellite map from Tijuana to Vancouver.
+- See labeled city dots, beach wave icons, report warning signs, and beach colors based on nearby reports.
+- Explore five source-linked historical report examples.
+- Add clearly marked TEST reports to try map filters and beach colors. Test reports stay on this device.
+- Filter shared and test reports by type or concern.
+- Delete reports submitted in the current browser session.
+- Read three short learning sections and take an eight-question quiz.
+- Use the site on a desktop or phone.
 
 ## Run it
 
-Open `index.html` in a browser. There are no installs, accounts, terminal commands, or build steps. An internet connection is needed to load Leaflet and satellite map tiles.
+Open `index.html` in a browser. There are no installs or build steps. An internet connection is needed for Leaflet, Supabase, and satellite map tiles.
 
-## Data storage
+To enable shared reports, follow [SUPABASE_SETUP.md](SUPABASE_SETUP.md) and fill in `supabase-config.js`. Until the database is connected, the map examples and local test reports work, but public report submissions are disabled.
 
-Reports you submit are stored only in this browser's `localStorage` on this device. They are not sent to anyone, and there is no backend, shared database, or agency connection. Clearing browser data may remove them. The five source-linked historical examples are built into the front-end and are not saved as user reports.
+## Data storage and privacy
+
+User reports are stored in the shared Supabase database so they appear for visitors on other devices. Exact coordinates, report type, concern level, date, and description are public. Do not include personal information. Reports are community observations, are not moderated, and do not alert an agency or emergency response team.
+
+The site uses an anonymous browser session so visitors do not need a sign-up form. The database keeps an owner ID for each submission, and its access rules let a visitor delete only their own reports. The session and the list of reports submitted from that browser are stored in that browser; clearing its data can make deletion unavailable. TEST reports and the list of IDs used to show your own contributions are kept in `localStorage`. The historical examples are built into the front-end and are not user submissions.
+
+Reports saved on-device in an earlier version are not uploaded automatically. They stay in the browser's old storage; submit them again if you want them to be public.
 
 ## Tools and libraries
 
 - Plain HTML, CSS, and JavaScript
 - [Leaflet 1.9.4](https://leafletjs.com/) for the map
+- [Supabase JavaScript 2.118.0](https://supabase.com/docs/reference/javascript/introduction) for shared reports
 - [Esri World Imagery](https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9) satellite tiles, credited on the map
 - NOAA and U.S. EPA pages listed in the Learn section
 

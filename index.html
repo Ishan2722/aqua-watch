@@ -31,11 +31,11 @@
         <p class="eyebrow">A small project for a big coastline</p>
         <h1 id="home-title">Notice the coast.<br><span>Care for what connects us.</span></h1>
         <p class="hero-copy">The U.S. West Coast is home to wildlife, communities, and places people love. Paying attention to pollution is one small way to understand what our shoreline needs.</p>
-        <p class="privacy-note"><span aria-hidden="true">●</span> Reports are saved only on this device. They are not sent to anyone.</p>
+        <p class="privacy-note"><span aria-hidden="true">●</span> Reports are public: exact locations and descriptions appear on the shared map.</p>
       </div>
       <div class="home-actions" aria-label="Choose a section">
         <button class="action-card" type="button" data-page="report"><span class="action-number">01</span><strong>Report</strong><span>Record something you noticed.</span><span class="card-arrow" aria-hidden="true">→</span></button>
-        <button class="action-card" type="button" data-page="map"><span class="action-number">02</span><strong>Map</strong><span>See reports saved on this device.</span><span class="card-arrow" aria-hidden="true">→</span></button>
+        <button class="action-card" type="button" data-page="map"><span class="action-number">02</span><strong>Map</strong><span>See reports shared by the community.</span><span class="card-arrow" aria-hidden="true">→</span></button>
         <button class="action-card" type="button" data-page="learn"><span class="action-number">03</span><strong>Learn</strong><span>Explore a few coast basics.</span><span class="card-arrow" aria-hidden="true">→</span></button>
         <button class="action-card" type="button" data-page="quiz"><span class="action-number">04</span><strong>Quiz</strong><span>Check what you remember.</span><span class="card-arrow" aria-hidden="true">→</span></button>
       </div>
@@ -46,7 +46,7 @@
       <div class="page-heading">
         <p class="eyebrow">Your observation</p>
         <h1 id="report-title">Make a report</h1>
-        <p>Record what you noticed near a U.S. Pacific shoreline. This is for awareness and practice; it does not alert a response team.</p>
+        <p>Record what you noticed near a U.S. Pacific shoreline. Reports are public and do not alert a response team.</p>
       </div>
       <form id="report-form" class="panel report-form">
         <div class="form-row">
@@ -76,25 +76,26 @@
         <label>Description <span class="label-hint">(up to 180 characters)</span>
           <textarea id="report-description" name="description" rows="3" maxlength="180" placeholder="What did you observe? Keep it brief and factual." required></textarea>
         </label>
+        <p id="report-storage-note" class="privacy-note">Your exact map location and description will be visible to everyone on the shared map. Do not include personal information.</p>
         <div class="picker-heading">
           <div><h2>Pick a location</h2><p>Click close to the U.S. Pacific shoreline.</p></div>
           <p id="selected-location" class="selected-location" aria-live="polite">No location selected</p>
         </div>
         <div id="report-map" class="map map-picker" role="application" aria-label="Map to choose a U.S. coastal location"></div>
         <p id="picker-message" class="form-message" aria-live="polite">Select a spot near the U.S. West Coast. Inland locations cannot be used.</p>
-        <button class="button-primary" type="submit">Save report on this device</button>
+        <button class="button-primary" type="submit">Share report publicly</button>
       </form>
       <section class="saved-section" aria-labelledby="saved-title">
-        <div class="section-heading-row"><div><p class="eyebrow">Local only</p><h2 id="saved-title">Your saved reports</h2></div><span class="small-note">Stored in this browser</span></div>
+        <div class="section-heading-row"><div><p class="eyebrow">Your contributions</p><h2 id="saved-title">Your reports</h2></div><span class="small-note">Only reports submitted in this browser</span></div>
         <div id="report-list" class="report-list"></div>
       </section>
     </section>
 
     <section class="page" id="map-page" aria-labelledby="map-title" hidden>
       <div class="page-heading">
-        <p class="eyebrow">Your device, your map</p>
+        <p class="eyebrow">Community coast watch</p>
         <h1 id="map-title">Coast watch map</h1>
-        <p>Satellite view from Tijuana to Vancouver. Scroll over the map, use + / −, or pinch to zoom. Report markers are saved in this browser only.</p>
+        <p>Satellite view from Tijuana to Vancouver. Scroll over the map, use + / −, or pinch to zoom. Community reports are visible to everyone.</p>
       </div>
       <div class="map-toolbar panel">
         <label>Type
@@ -128,14 +129,14 @@
         <span><i class="legend-safety-dot green" aria-hidden="true"></i> No recent reports</span>
         <span><i class="legend-safety-dot orange" aria-hidden="true"></i> Reports nearby</span>
         <span><i class="legend-safety-dot red" aria-hidden="true"></i> High concern nearby</span>
-        <span><i class="legend-report-sign" aria-hidden="true">!</i> Report concern: <b class="concern-low">low</b> / <b class="concern-medium">medium</b> / <b class="concern-high">high</b></span>
+        <span><i class="legend-report-sign" aria-hidden="true">!</i> Shared report: <b class="concern-low">low</b> / <b class="concern-medium">medium</b> / <b class="concern-high">high</b></span>
       </div>
-      <p class="map-source-note">Five historical examples come from public agency records and use warning signs with aqua outlines. Click one for its source. Test reports are marked TEST and saved on this device. Both are demonstrations, not live warnings.</p>
-      <p class="map-safety-note">Beach colors use reports saved on this device within 5 km in the past 30 days: green means none, orange means one or more, and red means a high-concern report or three or more. TEST reports can change these example colors; delete them from the Report page when finished. These are not official safety notices.</p>
-      <div id="main-map" class="map map-main" role="application" aria-label="Satellite map from Tijuana to Vancouver with major cities, featured beaches, public historical examples, and reports saved on this device"></div>
+      <p class="map-source-note">Five historical examples come from public agency records and use warning signs with aqua outlines. Click one for its source. TEST reports are local demonstrations, not live warnings.</p>
+      <p class="map-safety-note">Beach colors use shared and TEST reports within 5 km in the past 30 days: green means none, orange means one or more, and red means a high-concern report or three or more. TEST reports can change these example colors. These are not official safety notices.</p>
+      <div id="main-map" class="map map-main" role="application" aria-label="Satellite map from Tijuana to Vancouver with major cities, featured beaches, historical examples, and shared community reports"></div>
       <p id="map-message" class="map-message" aria-live="polite"></p>
       <p class="map-attribution-note">Satellite imagery © <a href="https://www.esri.com/en-us/legal/terms/full-master-agreement" target="_blank" rel="noreferrer">Esri</a>, Maxar, Earthstar Geographics, and the GIS User Community.</p>
-      <p class="privacy-note"><span aria-hidden="true">●</span> Reports stay on this device and are not sent to anyone.</p>
+      <p class="privacy-note"><span aria-hidden="true">●</span> Community reports, including exact locations and descriptions, are public.</p>
     </section>
 
     <section class="page" id="learn" aria-labelledby="learn-title" hidden>
@@ -171,10 +172,12 @@
 
   <footer class="site-footer">
     <span>Aqua Watch · Student-made coast awareness project</span>
-    <span>Reports are saved only on this device and are not sent to anyone.</span>
+    <span>Community reports are public; TEST reports stay on this device.</span>
   </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script>
+  <script src="supabase-config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

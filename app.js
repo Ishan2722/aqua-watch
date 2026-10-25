@@ -1,4 +1,5 @@
-const STORAGE_KEY = "aquaWatchReports";
+const TEST_REPORTS_STORAGE_KEY = "aquaWatchTestReports";
+const OWNED_REPORTS_STORAGE_KEY = "aquaWatchOwnedReportIds";
 const TYPE_NAMES = {
   trash: "Trash / plastic",
   oil: "Oil or chemical",
@@ -98,7 +99,13 @@ const FEATURED_BEACHES = [
 const BEACH_REPORT_RADIUS_KM = 5;
 const BEACH_REPORT_WINDOW_DAYS = 30;
 
-let reports = loadReports();
+const appConfig = window.AQUA_WATCH_CONFIG || {};
+const sharedReportsClient = window.supabase && appConfig.url && appConfig.publishableKey
+  ? window.supabase.createClient(appConfig.url, appConfig.publishableKey)
+  : null;
+let reports = [];
+let testReports = loadTestReports();
+let ownedReportIds = loadOwnedReportIds();
 let reportMap;
 let mainMap;
 let pickerMarker;
@@ -107,23 +114,44 @@ let beachLayer;
 let publicReportLayer;
 let reportLayer;
 let selectedLocation = null;
-function loadReports() {
+function loadTestReports() {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved = localStorage.getItem(TEST_REPORTS_STORAGE_KEY) || localStorage.getItem("aquaWatchReports");
     if (!saved) return [];
     const parsed = JSON.parse(saved);
-    return Array.isArray(parsed) ? parsed : [];
+    return Array.isArray(parsed) ? parsed.filter((report) => report && report.isTestReport) : [];
   } catch (error) {
     return [];
   }
 }
-function saveReports() {
+function saveTestReports() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(reports));
+    localStorage.setItem(TEST_REPORTS_STORAGE_KEY, JSON.stringify(testReports));
     return true;
   } catch (error) {
     return false;
   }
+}
+function loadOwnedReportIds() {
+  try {
+    const saved = localStorage.getItem(OWNED_REPORTS_STORAGE_KEY);
+    if (!saved) return [];
+    const parsed = JSON.parse(saved);
+    return Array.isArray(parsed) ? parsed.filter((id) => typeof id === "string") : [];
+  } catch (error) {
+    return [];
+  }
+}
+function saveOwnedReportIds() {
+  try {
+    localStorage.setItem(OWNED_REPORTS_STORAGE_KEY, JSON.stringify(ownedReportIds));
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+function allReports() {
+  return [...reports, ...testReports];
 }
 function showPage(pageId) {
   const targetId = pageId === "map" ? "map-page" : pageId;
@@ -252,19 +280,37 @@ function createReportCard(report) {
 function renderReportList() {
   const list = document.getElementById("report-list");
   list.replaceChildren();
-  if (!reports.length) {
+  const mine = [
+    ...reports.filter((report) => ownedReportIds.includes(report.id)),
+    ...testReports
+  ];
+  if (!mine.length) {
     const empty = document.createElement("p");
     empty.className = "empty-state";
-    empty.textContent = "No reports saved yet. Your reports will appear here.";
+    empty.textContent = sharedReportsClient
+      ? "No reports from this browser yet. Reports shared by everyone appear on the map."
+      : "Shared reporting is not connected yet. Test reports can still be added from the map.";
     list.append(empty);
     return;
   }
-  [...reports].reverse().forEach((report) => list.append(createReportCard(report)));
+  [...mine].reverse().forEach((report) => list.append(createReportCard(report)));
 }
-function deleteReport(reportId) {
-  if (!window.confirm("Delete this report from this device?")) return;
-  reports = reports.filter((report) => report.id !== reportId);
-  if (!saveReports()) window.alert("Browser storage is unavailable, so this change could not be saved.");
+async function deleteReport(reportId) {
+  if (!window.confirm("Delete this report? Shared reports are removed from the public map.")) return;
+  const testReport = testReports.find((report) => report.id === reportId);
+  if (testReport) {
+    testReports = testReports.filter((report) => report.id !== reportId);
+    if (!saveTestReports()) window.alert("Browser storage is unavailable, so this test report could not be deleted.");
+  } else if (ownedReportIds.includes(reportId) && sharedReportsClient) {
+    const { error } = await sharedReportsClient.from("reports").delete().eq("id", reportId);
+    if (error) {
+      window.alert("This report could not be deleted. Check your connection and try again.");
+      return;
+    }
+    ownedReportIds = ownedReportIds.filter((id) => id !== reportId);
+    saveOwnedReportIds();
+    await loadSharedReports();
+  }
   renderReportList();
   renderMapMarkers();
   updateTestReportButton();
@@ -272,13 +318,13 @@ function deleteReport(reportId) {
 function updateTestReportButton() {
   const button = document.getElementById("add-test-reports");
   if (!button) return;
-  const alreadyAdded = reports.some((report) => report.isTestReport);
+  const alreadyAdded = testReports.length > 0;
   button.disabled = alreadyAdded;
   button.textContent = alreadyAdded ? "Test reports added" : "Add test reports";
 }
 function addTestReports() {
   const message = document.getElementById("test-report-message");
-  if (reports.some((report) => report.isTestReport)) {
+  if (testReports.length > 0) {
     message.textContent = "Test reports are already saved here. Delete them from the Report page before adding them again.";
     return;
   }
@@ -289,18 +335,18 @@ function addTestReports() {
     date,
     isTestReport: true
   }));
-  reports.push(...added);
-  if (!saveReports()) {
-    reports.splice(-added.length);
+  testReports.push(...added);
+  if (!saveTestReports()) {
+    testReports.splice(-added.length);
     message.textContent = "Browser storage is unavailable, so test reports could not be saved.";
     return;
   }
   renderReportList();
   renderMapMarkers();
   updateTestReportButton();
-  message.textContent = "Added 3 TEST reports to this device. Delete them from the Report page when you are done.";
+  message.textContent = "Added 3 TEST reports saved only on this device. Delete them from the Report page when you are done.";
 }
-function handleReportSubmit(event) {
+async function handleReportSubmit(event) {
   event.preventDefault();
   const form = event.currentTarget;
   const message = document.getElementById("picker-message");
@@ -315,7 +361,6 @@ function handleReportSubmit(event) {
     return;
   }
   const report = {
-    id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
     type: document.getElementById("report-type").value,
     concern: document.getElementById("report-concern").value,
     date,
@@ -327,20 +372,84 @@ function handleReportSubmit(event) {
     setMessage(message, "Please add a short description before saving.", "error");
     return;
   }
-  reports.push(report);
-  if (!saveReports()) {
-    reports.pop();
-    setMessage(message, "Browser storage is unavailable, so the report could not be saved.", "error");
+  if (!sharedReportsClient) {
+    setMessage(message, "Shared reporting is not connected yet. Ask the site owner to finish the database setup.", "error");
     return;
+  }
+  const submitButton = form.querySelector('button[type="submit"]');
+  if (submitButton) {
+    submitButton.disabled = true;
+    submitButton.textContent = "Sharing report…";
+  }
+  try {
+    let { data: authData, error: authError } = await sharedReportsClient.auth.getSession();
+    if (authError) throw authError;
+    if (!authData.session) {
+      const signInResult = await sharedReportsClient.auth.signInAnonymously();
+      if (signInResult.error) throw signInResult.error;
+      authData = { session: signInResult.data.session };
+    }
+    const ownerId = authData.session.user.id;
+    const { data, error } = await sharedReportsClient.from("reports").insert({
+      owner_id: ownerId,
+      type: report.type,
+      concern: report.concern,
+      report_date: report.date,
+      description: report.description,
+      lat: report.lat,
+      lng: report.lng
+    }).select("id").single();
+    if (error) throw error;
+    report.id = data.id;
+    reports.unshift(report);
+    ownedReportIds = [...new Set([...ownedReportIds, report.id])];
+    saveOwnedReportIds();
+  } catch (error) {
+    setMessage(message, "The report could not be shared. Check your connection and try again.", "error");
+    return;
+  } finally {
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.textContent = "Share report publicly";
+    }
   }
   form.reset();
   document.getElementById("report-date").value = getLocalDate();
   selectedLocation = null;
   if (pickerMarker) pickerMarker.remove();
   document.getElementById("selected-location").textContent = "No location selected";
-  setMessage(message, "Report saved on this device. It was not sent to anyone.", "success");
+  setMessage(message, "Report shared on the public map with its exact location and description.", "success");
   renderReportList();
   renderMapMarkers();
+}
+async function loadSharedReports() {
+  if (!sharedReportsClient) return;
+  try {
+    const { data, error } = await sharedReportsClient
+      .from("reports")
+      .select("id,type,concern,report_date,description,lat,lng,created_at")
+      .order("created_at", { ascending: false });
+    if (error) throw error;
+    reports = (Array.isArray(data) ? data : []).map((report) => ({
+      id: report.id,
+      type: report.type,
+      concern: report.concern,
+      date: report.report_date,
+      description: report.description,
+      lat: Number(report.lat),
+      lng: Number(report.lng)
+    }));
+    renderReportList();
+    renderMapMarkers();
+    return true;
+  } catch (error) {
+    const message = document.getElementById("map-message");
+    if (message) {
+      message.textContent = "Shared reports could not load. Check your internet connection and try again.";
+      message.className = "form-message error";
+    }
+    return false;
+  }
 }
 function initReportPage() {
   const today = getLocalDate();
@@ -348,6 +457,12 @@ function initReportPage() {
   dateInput.max = today;
   dateInput.value = today;
   document.getElementById("report-form").addEventListener("submit", handleReportSubmit);
+  const submitButton = document.querySelector('#report-form button[type="submit"]');
+  const storageNote = document.getElementById("report-storage-note");
+  if (submitButton && !sharedReportsClient) submitButton.disabled = true;
+  if (storageNote && !sharedReportsClient) {
+    storageNote.textContent = "Shared reporting is not connected yet. The site owner must finish database setup before public reports can be submitted.";
+  }
   renderReportList();
 }
 function createPopupContent(report) {
@@ -411,7 +526,7 @@ function getBeachSafety(beach) {
   const now = Date.now();
   const windowMs = BEACH_REPORT_WINDOW_DAYS * 24 * 60 * 60 * 1000;
   const beachPoint = [beach.lat, beach.lng];
-  const recentReports = reports.filter((report) => {
+  const recentReports = allReports().filter((report) => {
     const reportTime = new Date(`${report.date}T00:00:00`).getTime();
     const reportPoint = [Number(report.lat), Number(report.lng)];
     const age = now - reportTime;
@@ -531,7 +646,7 @@ function renderMapMarkers() {
   reportLayer.clearLayers();
   const selectedType = document.getElementById("filter-type").value;
   const selectedConcern = document.getElementById("filter-concern").value;
-  const visible = reports.filter((report) => isNearUsCoast(report.lat, report.lng)
+  const visible = allReports().filter((report) => isNearUsCoast(report.lat, report.lng)
     && (selectedType === "all" || report.type === selectedType)
     && (selectedConcern === "all" || report.concern === selectedConcern));
   const visiblePublic = PUBLIC_REPORT_EXAMPLES.filter((report) =>
@@ -547,7 +662,9 @@ function renderMapMarkers() {
   });
   renderPublicReportMarkers(visiblePublic);
   const count = visible.length + visiblePublic.length;
-  document.getElementById("report-count").textContent = `${count} visible ${count === 1 ? "report" : "reports"} · ${visiblePublic.length} public examples, ${visible.length} on this device`;
+  const sharedCount = visible.filter((report) => !report.isTestReport).length;
+  const testCount = visible.filter((report) => report.isTestReport).length;
+  document.getElementById("report-count").textContent = `${count} visible ${count === 1 ? "report" : "reports"} · ${sharedCount} shared, ${visiblePublic.length} historical examples, ${testCount} local tests`;
   renderBeachMarkers();
 }
 function initMainMap() {
@@ -688,13 +805,21 @@ function showQuizResult() {
 function initQuiz() {
   showQuizStart();
 }
-function initApp() {
+async function initApp() {
   document.querySelectorAll("[data-page]").forEach((item) => item.addEventListener("click", (event) => {
     event.preventDefault();
     showPage(item.dataset.page);
   }));
   initReportPage();
   initQuiz();
+  if (sharedReportsClient) await loadSharedReports();
+  else {
+    const mapMessage = document.getElementById("map-message");
+    if (mapMessage) {
+      mapMessage.textContent = "Shared reports are not connected yet. Historical examples and local test reports are still available.";
+      mapMessage.className = "form-message error";
+    }
+  }
   const requestedPage = window.location.hash.slice(1);
   const validPages = ["home", "report", "map", "learn", "quiz"];
   showPage(validPages.includes(requestedPage) ? requestedPage : "home");

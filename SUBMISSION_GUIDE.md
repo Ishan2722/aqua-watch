@@ -2,10 +2,12 @@
 
 ## 1. Upload the folder to a new public GitHub repository
 
+Before uploading, complete [SUPABASE_SETUP.md](SUPABASE_SETUP.md) and add your project's URL and publishable key to `supabase-config.js`. The publishable key is intended for the site; never upload a `service_role` or secret key.
+
 1. Sign in to [GitHub](https://github.com/) and choose **New repository**.
 2. Name it `aqua-watch`, choose **Public**, and create it. You can leave the “Add a README” option off because this folder already has one.
 3. In the new repository, select **Add file → Upload files**.
-4. Open the `aqua-watch` folder on your computer. Drag all files inside it, including `index.html`, `style.css`, `app.js`, `README.md`, `SUBMISSION_GUIDE.md`, and `.gitignore`, into the upload area. Upload the files into the repository's top level; don't upload an extra enclosing `aqua-watch` folder.
+4. Open the `aqua-watch` folder on your computer. Drag all files inside it, including `index.html`, `style.css`, `app.js`, `supabase-config.js`, `supabase-schema.sql`, `SUPABASE_SETUP.md`, `README.md`, `SUBMISSION_GUIDE.md`, `logo.svg`, and `.gitignore`, into the upload area. Upload the files into the repository's top level; don't upload an extra enclosing `aqua-watch` folder.
 5. Add a short commit message such as `Add Aqua Watch site`, then select **Commit changes**.
 
 ## 2. Turn on GitHub Pages
@@ -32,8 +34,8 @@
 ## 1–3 minute demo video outline
 
 - **Problem (15–25 sec):** Explain why U.S. coasts matter and why noticing pollution is a useful first step.
-- **Reporting walkthrough (25–35 sec):** Pick a coastal point, choose a pollution type and concern level, add a short description, and save it. Mention that it stays on this device.
-- **Map walkthrough (20–30 sec):** Zoom with the wheel or map buttons, point out city labels, beach waves and report-based color badges, then click an aqua-outlined warning example to show its public source. Add the TEST reports to demonstrate filters and delete them from the Report page afterward.
+- **Reporting walkthrough (25–35 sec):** Pick a coastal point, choose a pollution type and concern level, add a short description, and share it. Explain that exact locations and descriptions are public.
+- **Map walkthrough (20–30 sec):** Zoom with the wheel or map buttons, point out city labels, beach waves and report-based color badges, then click an aqua-outlined warning example to show its public source. Add the TEST reports to demonstrate filters and delete them from the Report page afterward; TEST reports stay on the device.
 - **Learn and quiz (25–40 sec):** Briefly show the three learning sections and answer a quiz question to reveal its explanation.
-- **Technical challenge (15–25 sec):** Describe how you focused the satellite map on the Tijuana-to-Vancouver Pacific corridor and checked report clicks against the U.S. West Coast so out-of-area points receive a friendly message.
+- **Technical challenge (15–25 sec):** Describe how you connected a shared database while using access rules to keep report deletion limited to the person who submitted it, and how the map checks that report locations are along the U.S. West Coast.
 - **What I learned (10–20 sec):** Share what you learned about coasts, making a simple website, or testing an idea.
